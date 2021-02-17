@@ -67,7 +67,6 @@ class UI {
     }
 
 
-
     toggleEditTodoViewOnEnter(event){
         let todoElement = event.target.parentElement;
         let inputNode = todoElement.querySelector('#project-todolist-item-title-input');
