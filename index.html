@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todolylistic</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lobster&family=Montserrat&family=Pacifico&family=Roboto&family=Lato:wght@700&display=swap');
+    </style>
+    <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+</head>
+<body>
+    <div id="content">
+        <header>
+            <p id="header-title"> <i id="header-logo"></i>Todolylistic</p>
+            <div id="header-menu"><i id="header-menu-button" class="fas fa-bars"></i></div>
+        </header>
+        <main id='main-container'>
+            <nav id='nav-container'>
+                <div id="nav-lists-container">
+                    <div id="default-list-container">
+                    </div>
+
+                    <div id="custom-list-container">
+                        <h2 id='nav-title'>Projects</h2>
+                        <div id="nav-add-project">
+                            <p><i class="fas fa-plus"></i>Add Project</p>
+                        </div>
+                        <div id="custom-list-item-add" class='hidden'>
+                            <input type="text" required name="custom-list-item-add-input" id="custom-list-item-add-input"><i id='custom-list-item-add-button' class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </nav>
+            <div id='project-container'>
+                <h1 id='project-title'>All Todos</h1>
+                <div id="project-todolist"></div>
+                <div id="project-add-container">
+                    <div id="project-addtodo">
+                        <p id="project-addtodo-button"><i class="fas fa-plus"></i>Add Todo</p>
+                    </div>
+                    <div id="project-todolist-item-create"class="project-todolist-item grow hidden">
+                        <!-- <div class="project-todolist-item-check"><i class="project-todolist-item-check-button far fa-circle grow2"></i></div> -->
+                        <div id="project-todolist-item-create-priority" class="project-todolist-item-priority"><i class="project-todolist-item-priority-button priority0 fas fa-square grow2" id="project-todolist-item-create-priority-button"></i></div>
+                        <input type="text" required name="project-todolist-item-title-input" id="project-todolist-item-create-title-input">
+                        <input type="date" required name="project-todolist-item-time-select" id="project-todolist-item-create-time-select">
+                        <div class="project-todolist-item-confirm"><i id='project-todolist-item-create-confirm-button' class="fas fa-check-circle grow2"></i></div>
+                        <div class="project-todolist-item-cancel"><i id='project-todolist-item-create-cancel-button' class=" fas fa-times-circle grow2"></i></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p id='footer-copyright'>Copyright 2020 Todolylistic</p>
+        </footer>
+    </div>
+</body>
+    <script src="main.js"></script>
+</html>
