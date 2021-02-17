@@ -19,26 +19,40 @@ class UI {
             let addTodoInput = document.getElementById('project-todolist-item-create-title-input');
             let addTodoDateInput = document.getElementById('project-todolist-item-create-time-select');
 
-            if (e.key == 'Enter'){
+            console.log('hers the focus');
+            console.log(document.querySelector(':focus'));
+            if (e.key == 'Enter' && (document.querySelector(':focus'))){
                 //dont trigger unless input area is not hidden and is active/selected
                 if (!addProjectNode.classList.contains('hidden') && (addProjectInput === document.activeElement)){
                     this.triggerConfirmProjectAddButton(e);
+                    this.clearFocus();
                     return;
                     //dont trigger unless input area not hidden and either text or date input area active/selected
                 }else if(((!addTodoNode.classList.contains('hidden') && (addTodoInput === document.activeElement)))){
                     this.toggleCreateTodoConfirmButtonOnEnter(e);
+                    this.clearFocus();
                     return;
                 }else if (( (!addTodoNode.classList.contains('hidden')) && (addTodoDateInput === document.activeElement) )){
                     this.toggleCreateTodoConfirmButtonOnEnter(e);
+                    this.clearFocus();
                     return;
                 }else if ((([...editProjectTitles].filter(title => title === document.activeElement))[0]=== document.activeElement) ||
                          (([...editProjectDates].filter(date => date === document.activeElement))[0]=== document.activeElement)){
                     this.toggleEditTodoViewOnEnter(e);
+                    this.clearFocus();
+                    this.clearFocus();
                     return;
                 }else {
                     return;
                 }
             }
+        }
+    }
+    
+    clearFocus(){
+        let elem = document.querySelector(':focus');
+        if(elem){
+            elem.blur();
         }
     }
 
