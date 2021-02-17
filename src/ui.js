@@ -87,8 +87,8 @@ class UI {
                 //also need to change the date area of the div - probably a better way to do this..
                 Storage.changeTodoDate(todoElement.id, date);
                 let projectDateElement = todoElement.querySelector('.project-todolist-item-time');
-                projectDateElement.textContent = formatDistanceToNow(parseISO(date), {addSuffix: true});
-
+                //dont display formatted time message if today, display message 'today
+                this.setDateElementTodayOrDistanceFromToday(projectDateElement, date);
                 child.classList.toggle('hidden');
 
             //dont hide item-check or item-priority
@@ -96,6 +96,18 @@ class UI {
                 child.classList.toggle('hidden');
             }
         });
+    }
+
+    //dont display formatted time message if today, display message 'Today'
+    //takes input dateDisplayElement and date yyyy-mm-dd formatted and changes
+    //dateDisplayElement textContent to Today or distance to today using formatDistanceToNow()
+    setDateElementTodayOrDistanceFromToday(dateDisplayElement, date){
+        if (isToday(parseISO(date))){
+            console.log(dateDisplayElement);
+            dateDisplayElement.textContent = ' Due Today';
+        }else{
+            dateDisplayElement.textContent = formatDistanceToNow(parseISO(date), {addSuffix: true});
+        }
     }
 
     initDateInputCreateTodo(){
@@ -116,7 +128,9 @@ class UI {
         let time = '';
         if (todo.dueDate === ''){
             time = ''
-        }else {
+        }else if (isToday(parseISO(todo.dueDate))){
+            time = 'Due Today';
+        }else{
             time = formatDistanceToNow(parseISO(todo.dueDate), {addSuffix: true});
         }
 
@@ -348,8 +362,23 @@ class UI {
                 //also need to change the date area of the div - probably a better way to do this..
                 Storage.changeTodoDate(todoElement.id, date);
                 let projectDateElement = todoElement.querySelector('.project-todolist-item-time');
-                projectDateElement.textContent = formatDistanceToNow(parseISO(date), {addSuffix: true});
+                // projectDateElement.textContent = formatDistanceToNow(parseISO(date), {addSuffix: true});
+                // this.setDateElementTodayOrDistanceFromToday(projectDateElement, date);
 
+                if (isToday(parseISO(date))){
+                    projectDateElement.textContent = 'Due Today';
+                }else{
+                    projectDateElement.textContent = formatDistanceToNow(parseISO(date), {addSuffix: true});
+                }
+
+                // setDateElementTodayOrDistanceFromToday(dateDisplayElement, date){
+                //     if (isToday(parseISO(date))){
+                //         console.log(dateDisplayElement);
+                //         dateDisplayElement.textContent = ' Due Today';
+                //     }else{
+                //         dateDisplayElement.textContent = formatDistanceToNow(parseISO(date), {addSuffix: true});
+                //     }
+                // }
                 child.classList.toggle('hidden');
 
             //dont hide item-check or item-priority
