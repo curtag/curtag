@@ -8,26 +8,6 @@ import Swal from 'sweetalert2';
 
 class UI {
 
-    // initEnterKey(){
-    //    
-
-
-    //     function detectSubmit(e){
-    //         console.log(`${e.code}`);
-    //         console.log(e);
-    //         let addProjectNode = document.getElementById('custom-list-item-add');
-    //         let addTodoNode = document.getElementById('project-todolist-item-create');
-    //         if (e.key == 'Enter'){
-    //             if (!addProjectNode.classList.contains('hidden')){
-    //                 console.log('itsahiddenamrio the project addsa hidden');
-    //                 this.triggerConfirmProjectAddButton(e);
-    //             }
-    //             if(!addTodoNode.classList.contains('hidden')){
-    //                 console.log('todo add showing bruv');
-    //             }
-    //         }
-    //     }
-    // }
     initEnterKey(){
         document.addEventListener('keyup', detectSubmit.bind(this));
         function detectSubmit(e){
@@ -38,11 +18,8 @@ class UI {
             let addProjectInput = document.getElementById('custom-list-item-add-input');
             let addTodoInput = document.getElementById('project-todolist-item-create-title-input');
             let addTodoDateInput = document.getElementById('project-todolist-item-create-time-select');
-            // let focus = document.querySelector('p')
 
-            console.log(([...editProjectDates].filter(date => date === document.activeElement))[0]=== document.activeElement);
             if (e.key == 'Enter'){
-                console.log([...editProjectTitles].filter(title => title === document.activeElement));
                 //dont trigger unless input area is not hidden and is active/selected
                 if (!addProjectNode.classList.contains('hidden') && (addProjectInput === document.activeElement)){
                     this.triggerConfirmProjectAddButton(e);
@@ -51,7 +28,6 @@ class UI {
                 }else if(((!addTodoNode.classList.contains('hidden') && (addTodoInput === document.activeElement)))){
                     this.toggleCreateTodoConfirmButtonOnEnter(e);
                     return;
-                    //sexy FUnCKtion really getting dirty
                 }else if (( (!addTodoNode.classList.contains('hidden')) && (addTodoDateInput === document.activeElement) )){
                     this.toggleCreateTodoConfirmButtonOnEnter(e);
                     return;
@@ -66,7 +42,6 @@ class UI {
         }
     }
 
-
     toggleEditTodoViewOnEnter(event){
         let todoElement = event.target.parentElement;
         let inputNode = todoElement.querySelector('#project-todolist-item-title-input');
@@ -75,6 +50,32 @@ class UI {
         let date = dateNode.value;
         //swap necessary elements
         let children = [...todoElement.children];
+        //error date entered before today
+        if (isBefore(parseISO(date), new Date) && (!(isToday(parseISO(date))))){
+            Swal.fire({
+                title: 'Error!',
+                text: 'You chose a due date before today.',
+                icon: 'error',
+                iconColor: '#a31818',
+                confirmButtonText: 'Ok',
+                background: '#868b85',
+                confirmButtonColor: '#2b302a',
+                })
+            return;
+        }
+        //make sure the date text isnt blank!
+        if (text == ''){
+            Swal.fire({
+                title: 'Error!',
+                text: 'You must name the todo.',
+                icon: 'error',
+                iconColor: '#a31818',
+                confirmButtonText: 'Ok',
+                background: '#868b85',
+                confirmButtonColor: '#2b302a',
+            });
+            return;
+        }
         //reveal the hidden and hide the revealed, go fool!
         children.forEach(child => {
             if (child.classList.contains('hidden')){
@@ -103,7 +104,6 @@ class UI {
     //dateDisplayElement textContent to Today or distance to today using formatDistanceToNow()
     setDateElementTodayOrDistanceFromToday(dateDisplayElement, date){
         if (isToday(parseISO(date))){
-            console.log(dateDisplayElement);
             dateDisplayElement.textContent = ' Due Today';
         }else{
             dateDisplayElement.textContent = formatDistanceToNow(parseISO(date), {addSuffix: true});
@@ -350,42 +350,71 @@ class UI {
         let date = dateNode.value;
         //swap necessary elements
         let children = [...todoElement.children];
-        //reveal the hidden and hide the revealed, go fool!
-        children.forEach(child => {
-            if (child.classList.contains('hidden')){
-                Storage.changeTodoText(todoElement.id, text);
-                //TODO change technique for this??? so dont have to rebuild every time edit select, only when field changed
-                //also need to change the text area of the div - probably a better way to do this..
-                let projectTitleElement = todoElement.querySelector('.project-todolist-item-title');
-                projectTitleElement.textContent = text;
-                //TODO change technique for this??? so  dont have to rebuild every time edit select, only when field changed
-                //also need to change the date area of the div - probably a better way to do this..
-                Storage.changeTodoDate(todoElement.id, date);
-                let projectDateElement = todoElement.querySelector('.project-todolist-item-time');
-                // projectDateElement.textContent = formatDistanceToNow(parseISO(date), {addSuffix: true});
-                // this.setDateElementTodayOrDistanceFromToday(projectDateElement, date);
 
-                if (isToday(parseISO(date))){
-                    projectDateElement.textContent = 'Due Today';
-                }else{
-                    projectDateElement.textContent = formatDistanceToNow(parseISO(date), {addSuffix: true});
+        //error the text isnt blank!
+        if (text == ''){
+            Swal.fire({
+                title: 'Error!',
+                text: 'You must name the todo.',
+                icon: 'error',
+                iconColor: '#a31818',
+                confirmButtonText: 'Ok',
+                background: '#868b85',
+                confirmButtonColor: '#2b302a',
+            });
+            return;
+        }
+
+        // if event coming from edit or cancel button button toggle hidden stuff and return
+        if ((event.originalTarget.classList.contains('project-todolist-item-edit') || (event.originalTarget.classList.contains('project-todolist-item-cancel-button')))){
+            children.forEach(child => {
+                if (!(child.classList.contains('project-todolist-item-check')) && !(child.classList.contains('project-todolist-item-priority'))){
+                    child.classList.toggle('hidden');
                 }
+            })
+            return;
+        }
+        //error  if entered date is before today
+        if(isBefore(parseISO(date), new Date) && (!(isToday(parseISO(date))))){
+            Swal.fire({
+                title: 'Error!',
+                text: 'You chose a due date before today.',
+                icon: 'error',
+                iconColor: '#a31818',
+                confirmButtonText: 'Ok',
+                background: '#868b85',
+                confirmButtonColor: '#2b302a',
+            });
+            return;
+        }
+        //if the events comingfrom the confirm button
+        if ((event.originalTarget.classList.contains('project-todolist-item-confirm-button'))){
+            children.forEach(child => {
+                if (child.classList.contains('hidden')){
+                    Storage.changeTodoText(todoElement.id, text);
+                    //TODO change technique for this??? so dont have to rebuild every time edit select, only when field changed
+                    //also need to change the text area of the div - probably a better way to do this..
+                    let projectTitleElement = todoElement.querySelector('.project-todolist-item-title');
+                    projectTitleElement.textContent = text;
+                    //TODO change technique for this??? so  dont have to rebuild every time edit select, only when field changed
+                    //also need to change the date area of the div - probably a better way to do this..
+                    Storage.changeTodoDate(todoElement.id, date);
+                    let projectDateElement = todoElement.querySelector('.project-todolist-item-time');
 
-                // setDateElementTodayOrDistanceFromToday(dateDisplayElement, date){
-                //     if (isToday(parseISO(date))){
-                //         console.log(dateDisplayElement);
-                //         dateDisplayElement.textContent = ' Due Today';
-                //     }else{
-                //         dateDisplayElement.textContent = formatDistanceToNow(parseISO(date), {addSuffix: true});
-                //     }
-                // }
-                child.classList.toggle('hidden');
+                    if (isToday(parseISO(date))){
+                        projectDateElement.textContent = 'Due Today';
+                    }else{
+                        projectDateElement.textContent = formatDistanceToNow(parseISO(date), {addSuffix: true});
+                    }
 
-            //dont hide item-check or item-priority
-            }else if ((!child.classList.contains('project-todolist-item-check')) && (!child.classList.contains('project-todolist-item-priority'))){
-                child.classList.toggle('hidden');
-            }
-        });
+                //toggle hidden on things
+                }
+                if ((!child.classList.contains('project-todolist-item-check')) && (!child.classList.contains('project-todolist-item-priority'))){
+                    child.classList.toggle('hidden');
+                }
+            });
+        } 
+
     }
 
 
@@ -524,7 +553,6 @@ class UI {
     initListButtons(){
         let buttons = document.querySelectorAll('.default-list-item,.custom-list-item');
         [...buttons].forEach(button => {
-            // console.log(button);
             button.onclick = event => this.toggleSelectedList(event);
         })
     }

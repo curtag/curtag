@@ -45,7 +45,6 @@ class Storage {
         let projects = this.getAllSavedProjectsAsObject();
         let names = [];
         projects.forEach(project => {
-            // console.log(project.name);
             names.push(project.name.toLowerCase());
         })
         return names;
@@ -125,7 +124,6 @@ class Storage {
 
     static getTodoProjectId(todoId){
         let todos = this.getAllTodos();
-        console.log(todos);
         let index = todos.findIndex( element => {
             if (element.id == todoId){
                 return true
@@ -134,8 +132,6 @@ class Storage {
 
         let todoProject = todos[index];
         let todoProjectId = todoProject.projectId;
-        console.log('tpi')
-        console.log(todoProjectId);
 
         return todoProjectId;
     }
@@ -148,7 +144,6 @@ class Storage {
         allProjects.forEach(project => {
             //if it isn't project, add to array without modifying
             if (project.id !== parentProjectId){
-                console.log(parentProjectId);
                 newData.push(project)
             }else{
                 //if it is project modify its todo
@@ -177,7 +172,6 @@ class Storage {
         allProjects.forEach(project => {
             //if it isn't project, add to array without modifying
             if (project.id !== parentProjectId){
-                console.log(parentProjectId);
                 newData.push(project)
             }else{
                 //if it is project modify its todo
@@ -209,7 +203,6 @@ class Storage {
         allProjects.forEach(project => {
             //if it isn't project, add to array without modifying
             if (project.id !== parentProjectId){
-                console.log(parentProjectId);
                 newData.push(project)
             }else{
                 //if it is project modify its todo
@@ -218,9 +211,6 @@ class Storage {
                 todos.forEach(todo => {
                     if (todo.id == todoId) {
                         //replace with function for checking if text changed
-                        console.log('the dates are following');
-                        console.log(todo.dueDate);
-                        console.log(date);
                         if (todo.dueDate !== date)
                         todo.dueDate = date;
                     }
@@ -242,7 +232,6 @@ class Storage {
         allProjects.forEach(project => {
             //if it isn't project, add to array without modifying
             if (project.id !== parentProjectId){
-                console.log(parentProjectId);
                 newData.push(project)
             }else{
                 //if it is project modify its todo
@@ -271,15 +260,12 @@ class Storage {
         allProjects.forEach(project => {
             //if it isn't project, add to array without modifying
             if (project.id !== parentProjectId){
-                console.log(parentProjectId);
                 newData.push(project)
             }else{
-                console.log('itsamaacho');
                 //if it is the project, modify the todo
                 let todos = project.todos;
                 //remove the passed in id
                 let newTodos = todos.filter(todo => todo.id !== todoId);
-                console.log(newTodos)
                 //reassign the todos
                 project.todos = newTodos;
                 //push the new data
@@ -321,7 +307,6 @@ class Storage {
         current.forEach(project => {
             let projTodos = project.todos;
             projTodos.forEach(todo => {
-                // console.log('todo is : ' + todo);
                 todos.push(todo);
             })
         })
