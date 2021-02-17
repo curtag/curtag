@@ -380,7 +380,7 @@ class UI {
         }
 
         // if event coming from edit or cancel button button toggle hidden stuff and return
-        if ((event.originalTarget.classList.contains('project-todolist-item-edit') || (event.originalTarget.classList.contains('project-todolist-item-cancel-button')))){
+        if ((event.srcElement.classList.contains('project-todolist-item-edit') || (event.srcElement.classList.contains('project-todolist-item-cancel-button')))){
             children.forEach(child => {
                 if (!(child.classList.contains('project-todolist-item-check')) && !(child.classList.contains('project-todolist-item-priority'))){
                     child.classList.toggle('hidden');
@@ -402,7 +402,7 @@ class UI {
             return;
         }
         //if the events comingfrom the confirm button
-        if ((event.originalTarget.classList.contains('project-todolist-item-confirm-button'))){
+        if ((event.srcElement.classList.contains('project-todolist-item-confirm-button'))){
             children.forEach(child => {
                 if (child.classList.contains('hidden')){
                     Storage.changeTodoText(todoElement.id, text);
