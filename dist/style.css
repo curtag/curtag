@@ -11,6 +11,7 @@ p, h1, h2, i, div {
 .hidden {
     display: none !important;
 }
+
 .block {
     display: block !important;
 }
@@ -479,7 +480,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
     }
 }
 
-@media (max-width: 1000px){
+@media (max-width: 960px){
     #main-container {
         min-height: calc(100vh - 9.4rem)
     }
@@ -548,7 +549,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
     }
 }
 
-@media (max-width: 600px){
+@media (max-width: 800px){
     #main-container {
         display: block;
         max-height: 100%;
@@ -754,12 +755,35 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         -webkit-appearance: textfield;
         min-height: 1.2rem;
     }
-  }
+
+  /* CSS specific landscape ios */
+
+
+    @media screen and (orientation:landscape) {
+        html, body{
+            background-color: #040a02;
+        }
+        #content {
+            min-height: 100vh;
+            min-width: 100vw;
+        }
+        body {
+            overscroll-behavior-y: none;
+            overscroll-behavior-x: none;
+        }
+
+        #main-container{
+        }
+
+    }
+
+}
+
 
 
   /* CSS for other than iOS devices */ 
 
   
-  @supports not (-webkit-touch-callout: none) {
+@supports not (-webkit-touch-callout: none) {
     
-  }
+}
