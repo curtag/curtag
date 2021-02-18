@@ -744,8 +744,21 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
 
     input[type="date"] {
         display:block;
+        text-align: right !important;
         -webkit-appearance: textfield;
-        min-height: 1.2em;
+        min-height: 1.2rem;
+        margin-left: 1rem;
+        width: 10rem;
+    }
+
+    input[type=date]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        display: none;
+    }
+
+    input[type=date]::-webkit-calendar-picker-indicator {
+        -webkit-appearance: none;
+        display: none;
     }
 }
 
