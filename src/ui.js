@@ -296,7 +296,7 @@ class UI {
     renderProjectSelect(title, id=''){
         let insertionPoint = document.getElementById('nav-add-project');
         let html = `
-            <p><i class="fas fa-bookmark"></i>${title}</p>
+            <p>${title}</p>
             <i class="custom-list-item-delete fas fa-trash-alt grow1 hidden"></i>
         `
         let node = document.createElement('div');
@@ -727,6 +727,7 @@ class UI {
         button.addEventListener('click', (e) => {
             this.clearAddProjectInput();
             element.classList.toggle('hidden');
+            button.classList.toggle('hidden');
         })
     }
 
@@ -738,6 +739,8 @@ class UI {
     triggerConfirmProjectAddButton(e){
         let node = e.target.parentElement;
         let title = node.querySelector('#custom-list-item-add-input').value;
+        let addButton = node.parentElement.querySelector('#nav-add-project');
+        addButton.classList.toggle('hidden');
         this.createProject(title);
         node.classList.toggle('hidden');
     }

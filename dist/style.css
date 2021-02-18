@@ -1,3 +1,13 @@
+p, h1, h2, i, div {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
 .hidden {
     display: none !important;
 }
@@ -138,11 +148,11 @@ footer {
 }
 
 .custom-list-item {
-    padding: .75rem 1rem .75rem .5rem;
+    padding: .75rem 1rem .75rem 2rem;
     border-radius: .3rem;
     margin-top: .5rem;
     display: flex; 
-    justify-content: space-between
+    justify-content: space-between;
 }
 
 .custom-list-item .fas {
@@ -197,6 +207,9 @@ footer {
 
 #custom-list-item-add-input:focus {
     outline: none;
+}
+#custom-list-item-add-input:hover {
+    cursor: pointer;
 }
 
 #custom-list-item-add-input i {
@@ -483,6 +496,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         font-size: 1.4rem;
     }
 
+
     .custom-list-item, .default-list-item, #nav-add-project{
         font-size: .8rem;
     }
@@ -546,13 +560,18 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
     #nav-container {
         max-width: 100vw;
         display: none;
+        padding: 1rem;
+    }
+    #nav-add-project {
+        padding-right: 1rem;
+        max-width: 7rem;
     }
     #header-logo {
         width: 30px;
         height: 30px;
     }
     #header-title {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
     }
 
     #nav-lists-container {
@@ -574,12 +593,143 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         margin-top: 1rem;
         margin-bottom: 2rem;
     }
-}
+
+    #project-todolist p{
+        padding: 0rem 1rem 0rem 0rem;
+    }
+
+    .project-todolist-item {
+        font-size: 1.25rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        justify-items: center;
+        row-gap: 1.5rem;
+    }
+    .default-list-item{
+        font-size: .8rem;
+    }
+    .default-list-item p{
+        padding: 0rem 1rem 0rem 0rem;
+    }
+    
+    .custom-list-item, .default-list-item{
+        margin-top: .8rem;
+    }
 
 
+    .custom-list-item { 
+        border: 1px solid white;
+        transform: scale(1.025);
+        font-size: .8rem;
+        max-height: 2rem;
+        align-content: center;
+        align-items: center;
+        overflow: hidden;
+        padding: .75rem 1rem .75rem .5rem;
+    }
+    .custom-list-item i {
+        font-size: 1rem;
+    }
 
-@supports (-webkit-touch-callout: none) {
-    /* CSS specific to iOS devices */ 
+    .custom-list-item p {
+        display: inline-block;
+        margin: .05rem 0rem 0rem 0rem;
+        overflow: hidden;
+        width: 5rem;
+        max-width: 5rem;
+        min-width: 5rem;
+    }
+    .custom-list-item .hidden {
+        display: block !important;
+    }
+
+    .custom-list-item .fas {
+        margin: 0;
+    }
+
+    .project-todolist-item-check{
+        grid-column: 0;
+        grid-row: 3;
+    }
+    .project-todolist-item-priority, .project-todolist-item-create-priority {
+        grid-column: 2;
+        grid-row: 3;
+    }
+    .project-todolist-item-title  {
+        grid-column: 1 / 5;
+        grid-row: 1;
+    }
+    .project-todolist-item-time {
+        grid-column: 1 / 5;
+        grid-row: 2;
+    }
+    .project-todolist-item-title-input, #project-todolist-item-create-title-input{
+        grid-column: 1 / 5;
+        grid-row: 1;
+        font-size: 1.25rem !important;
+    }
+    .project-todolist-item-time-select, #project-todolist-item-create-time-select{
+        grid-column: 1 / 5;
+        grid-row: 2;
+        margin: 0 !important;
+        text-align: center;
+        font-size: 1.25rem !important;
+    }
+
+    #project-todolist-item-create .project-todolist-item-confirm {
+        grid-column: 4;
+        grid-row: 3;
+    }
+
+    #project-todolist-item-create-priority{
+        grid-column: 2 / 4;
+        grid-row: 3;
+    }
+
+    .project-todolist-item-edit-container{
+        grid-column: 0;
+        grid-row: 3;
+    }
+    .project-todolist-item-delete{
+        grid-column: 1;
+        grid-row: 3;
+    }
+    .project-todolist-item-confirm{
+        grid-column: 0;
+        grid-row: 3;
+    }
+    .project-todolist-item-cancel{
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    #custom-list-item-add {
+        margin-left: 0rem;
+    }
+
+    #custom-list-item-add-input {
+        max-width: 5rem;
+        margin-right: .5rem;
+    }
+    
+    #custom-list-item-add i {
+        font-size: 1.5rem;
+        margin-left: 0rem;
+    }
+    
+    #custom-list-item-add i:hover{
+
+    }
+    
+    #custom-list-item-add-input::selection {
+    }
+    
+    #custom-list-item-add-input:focus {
+    }
+    
+    #custom-list-item-add-input i {
+    }
 
     .project-todolist-item .fa,
     .project-todolist-item .fas,
@@ -592,8 +742,24 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         -webkit-appearance: textfield;
         min-height: 1.2em;
     }
+}
+
+    /* CSS specific to iOS devices */
+
+
+@supports (-webkit-touch-callout: none) {
+
+    input[type="date"] {
+        display:block;
+        -webkit-appearance: textfield;
+        min-height: 1.2rem;
+    }
   }
+
+
+  /* CSS for other than iOS devices */ 
+
   
   @supports not (-webkit-touch-callout: none) {
-    /* CSS for other than iOS devices */ 
+    
   }
