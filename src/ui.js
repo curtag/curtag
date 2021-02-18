@@ -120,7 +120,7 @@ class UI {
         if (isToday(parseISO(date))){
             dateDisplayElement.textContent = ' Due Today';
         }else{
-            dateDisplayElement.textContent = formatDistanceToNow(parseISO(date), {addSuffix: true});
+            dateDisplayElement.textContent = 'Due ' + formatDistanceToNow(parseISO(date), {addSuffix: true}) + '';
         }
     }
 
@@ -145,7 +145,7 @@ class UI {
         }else if (isToday(parseISO(todo.dueDate))){
             time = 'Due Today';
         }else{
-            time = formatDistanceToNow(parseISO(todo.dueDate), {addSuffix: true});
+            time = 'Due ' + formatDistanceToNow(parseISO(todo.dueDate), {addSuffix: true});
         }
 
         let html = `
@@ -341,13 +341,28 @@ class UI {
             button.addEventListener('click', this.deleteTodoItem);
         });
     }
-
     deleteTodoItem(event){
-        let todoElement = event.target.parentElement.parentElement;
-        todoElement.remove();
-        let id = todoElement.id;
-        Storage.removeTodo(id);
+        let todoName = event.currentTarget.parentElement.parentElement.querySelector('.project-todolist-item-title').textContent;
+        Swal.fire({
+            title: `Do you want to delete '${todoName}'?`,
+            text: `This operation cannot be undone.`,
+            icon: 'warning',
+            confirmButtonText: 'Yes',
+            showCancelButton: true,
+            cancelButtonText: 'No',
+            background: '#868b85',
+            confirmButtonColor: '#2b302a',
+        }).then((result) => {
+            if (result.value){
+                let todoElement = event.target.parentElement.parentElement;
+                todoElement.remove();
+                let id = todoElement.id;
+                Storage.removeTodo(id);
+            }
+        })
+
     }
+    
 
     initEditTodoButtons(){
         let buttons = document.getElementsByClassName('project-todolist-item-edit');
@@ -418,7 +433,7 @@ class UI {
                     if (isToday(parseISO(date))){
                         projectDateElement.textContent = 'Due Today';
                     }else{
-                        projectDateElement.textContent = formatDistanceToNow(parseISO(date), {addSuffix: true});
+                        projectDateElement.textContent = 'Due ' + formatDistanceToNow(parseISO(date), {addSuffix: true});
                     }
 
                 //toggle hidden on things
@@ -705,10 +720,24 @@ class UI {
               })
             return;
         }
-
-        id = id.replace('custom-list-item-', '');
-        customList.remove();
-        Storage.removeProject(id)
+        console.log(event.target.parentElement.querySelector('p').textContent)
+        let listName = event.currentTarget.parentElement.querySelector('p').textContent;
+        Swal.fire({
+            title: `Do you want to delete '${listName}'?`,
+            text: `This operation cannot be undone.`,
+            icon: 'warning',
+            confirmButtonText: 'Yes',
+            showCancelButton: true,
+            cancelButtonText: 'No',
+            background: '#868b85',
+            confirmButtonColor: '#2b302a',
+        }).then((result) => {
+            if (result.value){
+                id = id.replace('custom-list-item-', '');
+                customList.remove();
+                Storage.removeProject(id)
+            }
+        })
     }
 
     initNavToggleButton() {
