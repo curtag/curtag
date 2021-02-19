@@ -362,10 +362,12 @@ class UI {
     initAddTodoButton() {
         let button = document.getElementById('project-addtodo-button');
         let element = document.getElementById('project-todolist-item-create');
+        let input = document.getElementById('project-todolist-item-create-title-input');
         button.addEventListener('click', () => {
             this.toggleVisibilityProjectAddTodo();
             element.classList.toggle('hidden');
             this.clearAddTodo();
+            input.focus();
         })
     }
 
@@ -422,6 +424,12 @@ class UI {
         let date = dateNode.value;
         //swap necessary elements
         let children = [...todoElement.children];
+
+        //make sure input node is selected
+        //setTimeout for domdom
+        setTimeout(() => {
+            inputNode.select();
+        }, 100);
 
         if (text == ''){
             Swal.fire({
@@ -502,7 +510,7 @@ class UI {
                     child.classList.toggle('hidden');
                 }
             });
-        } 
+        }
     }
 
 
@@ -800,11 +808,13 @@ class UI {
     initProjectAddButton(){
         let button = document.getElementById('nav-add-project');
         let element = document.getElementById('custom-list-item-add');
+        let input = document.getElementById('custom-list-item-add-input');
 
         button.addEventListener('click', (e) => {
             this.clearAddProjectInput();
             element.classList.toggle('hidden');
             button.classList.toggle('hidden');
+            input.focus();
         })
     }
 
