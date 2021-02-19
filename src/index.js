@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 
 const ui = new UI;
 
+ui.checkLocalStorage();
+
 ui.renderDefaultProjects();
 ui.createAllSavedCustomProjects();
 ui.initAddTodoButton();

@@ -148,7 +148,6 @@ class UI {
 
     toggleMinView(event){
         let todos = document.getElementsByClassName('project-todolist-item');
-        console.log(todos);
         [...todos].forEach(todo => {
             todo.classList.toggle('min-view');
         })
@@ -764,23 +763,12 @@ class UI {
     }
 
     deleteCustomList(event){
+        let allTodos = document.querySelector('.default-list-item');
+        let allTodosLocation = allTodos.querySelector('p');
         let customList = event.target.parentElement;
         let id = customList.id;
-        let projectElement = event.currentTarget.parentElement;
-        //if it's the selected element throw error and break operation
-        if (projectElement.classList.contains('selected')){
-            Swal.fire({
-                title: 'Error!',
-                text: 'You cannot delete an open project.',
-                icon: 'error',
-                iconColor: '#a31818',
-                confirmButtonText: 'Ok',
-                background: '#868b85',
-                confirmButtonColor: '#2b302a',
-              })
-            return;
-        }
         let listName = event.currentTarget.parentElement.querySelector('p').textContent;
+        
         Swal.fire({
             title: `Do you want to delete '${listName}'?`,
             text: `This operation cannot be undone.`,
@@ -795,6 +783,7 @@ class UI {
                 id = id.replace('custom-list-item-', '');
                 customList.remove();
                 Storage.removeProject(id)
+                allTodosLocation.click();
             }
         })
     }
@@ -927,6 +916,69 @@ class UI {
         let time = document.getElementById('project-todolist-item-create-time-select').value;
         let priority = this.getPriority(document.getElementById('project-todolist-item-create-priority-button'));
         return { element, title, time, priority };
+    }
+
+    checkLocalStorage(){
+        //check localstore
+        let test = "test";
+        try {
+            // try setting an item
+            localStorage.setItem("test", test);
+            localStorage.removeItem("test");
+        }
+        catch(e)
+        {   
+            // browser specific checks if local storage was exceeded
+            if (e.name === "QUATA_EXCEEDED_ERR" // Chrome
+                || e.name === "NS_ERROR_DOM_QUATA_REACHED" //Firefox/Safari
+            ) {
+                // local storage is full
+                Swal.fire({
+                    title: "Woah there! Your local storage is full!",
+                    text: 'We use localstorage to store your todos, and to do so we need some space. Please clean up your localstorage to continue.',
+                    icon: 'error',
+                    iconColor: '#a31818',
+                    confirmButtonText: 'Ok',
+                    background: '#868b85',
+                    confirmButtonColor: '#2b302a',
+                })
+                document.getElementById('project-addtodo-button').remove();
+                document.getElementById('nav-add-project').remove();
+            } else {
+                try{
+                    if(localStorage.remainingSpace === 0) {// IE
+                        // local storage is full
+                        Swal.fire({
+                            title: "Woah there! Your local storage is full!",
+                            text: 'We use localstorage to store your todos, and to do so we need some space. Please clean up your localstorage to continue.',
+                            icon: 'error',
+                            iconColor: '#a31818',
+                            confirmButtonText: 'Ok',
+                            background: '#868b85',
+                            confirmButtonColor: '#2b302a',
+                        })
+                        document.getElementById('project-addtodo-button').remove();
+                        document.getElementById('nav-add-project').remove();
+                    }
+                }catch (e) {
+                    // localStorage.remainingSpace doesn't exist
+                }
+
+                // local storage might not be available
+                Swal.fire({
+                    title: "We are unable to access your local storage!",
+                    text: 'It looks like your localstorage is unavailable. Unfortunately our website will not work without it. Please re-enable localstorage to continue.',
+                    icon: 'error',
+                    iconColor: '#a31818',
+                    confirmButtonText: 'Ok',
+                    background: '#868b85',
+                    confirmButtonColor: '#2b302a',
+                })
+                document.getElementById('project-addtodo-button').remove();
+                document.getElementById('nav-add-project').remove();
+                return;
+            }
+        }   
     }
 }
 

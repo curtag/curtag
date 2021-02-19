@@ -36,7 +36,6 @@ p, h1, h2, i, div {
     height: 100%;
 }
 
-
 /* HEADER RELATED */
 header {
     display: flex;
@@ -234,8 +233,12 @@ footer {
 
 #min-view-button {
     color: white;
-    font-size: 2rem;
+    font-size: 1.5rem;
     cursor: pointer;
+    /* justify-self: center; */
+}
+#min-view-button:hover {
+    color: #040a02
 }
 
 #project-title {
@@ -785,7 +788,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
     .editing.min-view {
         grid-template-columns: 1fr 1fr 1fr 1fr !important;
         grid-template-rows: 1fr 1fr 1fr !important; 
-        row-gap: 1.5rem;
+        row-gap: .5rem;
     }
 
     .editing.min-view .project-todolist-item-confirm{
@@ -823,6 +826,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         text-decoration: underline;
         font-size: .9rem;
         border: none;
+        justify-self: self-start;
 
         /* max-width: 120px;
         white-space: nowrap;
@@ -850,6 +854,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         grid-row: 1;
         grid-column: 4/5;
         font-size: .6rem;
+        justify-self: self-start;
     }
     .min-view .project-todolist-item-priority:hover,
     .min-view .project-todolist-item-check:hover,
