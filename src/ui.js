@@ -1,15 +1,15 @@
-import { Todo } from './todos.js';
-import { Storage } from './storage.js';
-import { Project } from './project.js';
-import { nanoid } from 'nanoid';
-import { parseISO, formatDistanceToNow, isBefore, isToday, parse } from 'date-fns';
-import Swal from 'sweetalert2';
+import { Todo } from "./todos.js";
+import { Storage } from "./storage.js";
+import { Project } from "./project.js";
+import { nanoid } from "nanoid";
+import { parseISO, formatDistanceToNow, isBefore, isToday, parse, min } from "date-fns";
+import Swal from "sweetalert2";
 
 
 class UI {
 
     initEnterKey(){
-        document.addEventListener('keyup', detectSubmit.bind(this));
+        document.addEventListener("keyup", detectSubmit.bind(this));
         function detectSubmit(e){
             let editProjectTitles = document.getElementsByClassName('project-todolist-item-title-input');
             let editProjectDates = document.getElementsByClassName('project-todolist-item-time-select')
@@ -19,8 +19,6 @@ class UI {
             let addTodoInput = document.getElementById('project-todolist-item-create-title-input');
             let addTodoDateInput = document.getElementById('project-todolist-item-create-time-select');
 
-            console.log('hers the focus');
-            console.log(document.querySelector(':focus'));
             if (e.key == 'Enter' && (document.querySelector(':focus'))){
                 //dont trigger unless input area is not hidden and is active/selected
                 if (!addProjectNode.classList.contains('hidden') && (addProjectInput === document.activeElement)){
@@ -90,6 +88,12 @@ class UI {
             });
             return;
         }
+
+        //remove editing class!
+        if(todoElement.classList.contains('editing')){
+            todoElement.classList.toggle('editing')
+        }
+
         //reveal the hidden and hide the revealed, go fool!
         children.forEach(child => {
             if (child.classList.contains('hidden')){
@@ -107,7 +111,8 @@ class UI {
                 child.classList.toggle('hidden');
 
             //dont hide item-check or item-priority
-            }else if ((!child.classList.contains('project-todolist-item-check')) && (!child.classList.contains('project-todolist-item-priority'))){
+            }else if ((!child.classList.contains('project-todolist-item-check')) 
+                     && (!child.classList.contains('project-todolist-item-priority'))){
                 child.classList.toggle('hidden');
             }
         });
@@ -136,6 +141,20 @@ class UI {
         return now.toLocaleDateString('en-Ca');
     }
 
+    initMinViewButton(){
+        let minViewButton = document.getElementById('min-view-button')
+        minViewButton.onclick = this.toggleMinView;
+    }
+
+    toggleMinView(event){
+        let todos = document.getElementsByClassName('project-todolist-item');
+        console.log(todos);
+        [...todos].forEach(todo => {
+            todo.classList.toggle('min-view');
+        })
+        event.target.classList.toggle('fa-rotate-180');
+    }
+
 
     createTodoFromTodoObj(todo) {
         let insertionPoint = document.getElementById('project-todolist');
@@ -149,16 +168,36 @@ class UI {
         }
 
         let html = `
-            <div class="project-todolist-item-check"><i class="project-todolist-item-check-button far fa-circle grow2"></i></div>
-            <div class="project-todolist-item-priority"><i class="project-todolist-item-priority-button priority${todo.priority} fas fa-square grow2"></i></div>
+            <div class="project-todolist-item-check">
+                <i class="project-todolist-item-check-button far fa-circle grow2"></i>
+            </div>
+            <div class="project-todolist-item-priority">
+                <i class="project-todolist-item-priority-button priority${todo.priority} fas fa-square grow2"></i>
+            </div>
             <div class="project-todolist-item-title">${todo.title}</div>
             <div class="project-todolist-item-time">${time}</div>
-            <div class="project-todolist-item-edit-container"><i class=" project-todolist-item-edit fas fa-pencil-alt grow2"></i></div>
-            <div class="project-todolist-item-delete"><i class="project-todolist-item-delete-button fas fa-trash-alt grow2"></i></div>
-            <input type="text" required name="project-todolist-item-title-input" class="project-todolist-item-title-input hidden" id="project-todolist-item-title-input" value='${todo.title}'>
-            <input type="date" required name="project-todolist-item-time-select" class="project-todolist-item-time-select hidden" id="project-todolist-item-time-select" min='${this.getTodayDate()}' value='${todo.dueDate}'>
-            <div class="project-todolist-item-confirm hidden"><i class="project-todolist-item-confirm-button fas fa-check-circle grow2"></i></div>
-            <div class="project-todolist-item-cancel hidden"><i class="project-todolist-item-cancel-button fas fa-times-circle grow2"></i></div>
+            <div class="project-todolist-item-edit-container">
+                <i class=" project-todolist-item-edit fas fa-pencil-alt grow2"></i>
+            </div>
+            <div class="project-todolist-item-delete">
+                <i class="project-todolist-item-delete-button fas fa-trash-alt grow2"></i>
+            </div>
+            <input type="text" 
+                   required name="project-todolist-item-title-input" 
+                   class="project-todolist-item-title-input hidden" 
+                   id="project-todolist-item-title-input" 
+                   value='${todo.title}'>
+            <input type="date" 
+                   required name="project-todolist-item-time-select" 
+                   class="project-todolist-item-time-select hidden" 
+                   id="project-todolist-item-time-select" 
+                   min='${this.getTodayDate()}' value='${todo.dueDate}'>
+            <div class="project-todolist-item-confirm hidden">
+                <i class="project-todolist-item-confirm-button fas fa-check-circle grow2"></i>
+            </div>
+            <div class="project-todolist-item-cancel hidden">
+                <i class="project-todolist-item-cancel-button fas fa-times-circle grow2"></i>
+            </div>      
         `
         let node = document.createElement('div');
         node.innerHTML = html;
@@ -167,6 +206,10 @@ class UI {
         if (todo.completed){
             node.classList.toggle('complete');
             node.firstElementChild.firstElementChild.classList.replace('far', 'fas');
+        }
+        //make sure to add min-view class if minview active
+        if (document.getElementById("min-view-button").classList.contains('fa-rotate-180')){
+            node.classList.add('min-view')
         }
         insertionPoint.append(node);
         this.initEditTodoButtons();
@@ -342,7 +385,8 @@ class UI {
         });
     }
     deleteTodoItem(event){
-        let todoName = event.currentTarget.parentElement.parentElement.querySelector('.project-todolist-item-title').textContent;
+        let todoName = event.currentTarget.parentElement
+                       .parentElement.querySelector('.project-todolist-item-title').textContent;
         Swal.fire({
             title: `Do you want to delete '${todoName}'?`,
             text: `This operation cannot be undone.`,
@@ -380,7 +424,6 @@ class UI {
         //swap necessary elements
         let children = [...todoElement.children];
 
-        //error the text isnt blank!
         if (text == ''){
             Swal.fire({
                 title: 'Error!',
@@ -394,10 +437,25 @@ class UI {
             return;
         }
 
+        //if event coming from edit, add editing class
+        if (event.srcElement.classList.contains('project-todolist-item-edit')){
+            todoElement.classList.toggle('editing');
+        }
+
+        //event coming from cancel, remove editing class
+        if (event.srcElement.classList.contains('project-todolist-item-cancel-button')){
+            if(todoElement.classList.contains('editing')){
+                todoElement.classList.toggle('editing')
+            }
+        }
+
         // if event coming from edit or cancel button button toggle hidden stuff and return
-        if ((event.srcElement.classList.contains('project-todolist-item-edit') || (event.srcElement.classList.contains('project-todolist-item-cancel-button')))){
+        if ((event.srcElement.classList.contains('project-todolist-item-edit') 
+           || (event.srcElement.classList.contains('project-todolist-item-cancel-button')))){
+            //already have editing class? remove it
             children.forEach(child => {
-                if (!(child.classList.contains('project-todolist-item-check')) && !(child.classList.contains('project-todolist-item-priority'))){
+                if (!(child.classList.contains('project-todolist-item-check')) 
+                && !(child.classList.contains('project-todolist-item-priority'))){
                     child.classList.toggle('hidden');
                 }
             })
@@ -418,6 +476,10 @@ class UI {
         }
         //if the events comingfrom the confirm button
         if ((event.srcElement.classList.contains('project-todolist-item-confirm-button'))){
+            //already have editing class? remove it
+            if(todoElement.classList.contains('editing')){
+                todoElement.classList.toggle('editing')
+            }
             children.forEach(child => {
                 if (child.classList.contains('hidden')){
                     Storage.changeTodoText(todoElement.id, text);
@@ -435,7 +497,6 @@ class UI {
                     }else{
                         projectDateElement.textContent = 'Due ' + formatDistanceToNow(parseISO(date), {addSuffix: true});
                     }
-
                 //toggle hidden on things
                 }
                 if ((!child.classList.contains('project-todolist-item-check')) && (!child.classList.contains('project-todolist-item-priority'))){
@@ -443,7 +504,6 @@ class UI {
                 }
             });
         } 
-
     }
 
 
@@ -720,7 +780,6 @@ class UI {
               })
             return;
         }
-        console.log(event.target.parentElement.querySelector('p').textContent)
         let listName = event.currentTarget.parentElement.querySelector('p').textContent;
         Swal.fire({
             title: `Do you want to delete '${listName}'?`,

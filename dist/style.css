@@ -8,6 +8,7 @@ p, h1, h2, i, div {
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+
 .hidden {
     display: none !important;
 }
@@ -223,14 +224,25 @@ footer {
     background-color: #868b85;
 }
 
+#project-title-container {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: auto;
+    margin-top: 2.5rem;
+}
+
+#min-view-button {
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
 #project-title {
     display: flex;
     color: white;
     font-family: 'Lato', sans-serif;
     font-size: 2rem;
-    width: 90%;
-    margin: auto;
-    margin-top: 2.5rem;
 }
 
 #project-todolist {
@@ -246,6 +258,7 @@ footer {
     border: 2px solid #040a02;
     border-radius: .2rem;
     margin-top: 1rem;
+    align-items: center;
 }
 .project-todolist-item .fa,
 .project-todolist-item .fas,
@@ -257,6 +270,7 @@ footer {
     -moz-box-shadow: 0 0 3px #040a02;
     -webkit-box-shadow: 0 0 3px #040a02;
     box-shadow: 0 0 3px #040a02;
+    cursor: pointer;
     
 }
 
@@ -747,7 +761,6 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         text-align: right !important;
         -webkit-appearance: textfield;
         min-height: 1.2rem;
-        margin-left: 1rem;
         width: 10rem;
     }
 
@@ -760,6 +773,114 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         -webkit-appearance: none;
         display: none;
     }
+
+    #project-title-container #min-view-button {
+        display: inline-block !important;
+    }
+
+    .min-view#project-todolist-item-create {
+        grid-template-columns: 1fr 1fr 1fr 1fr !important;
+        grid-template-rows: 1fr 1fr 1fr !important; 
+    }
+    .editing.min-view {
+        grid-template-columns: 1fr 1fr 1fr 1fr !important;
+        grid-template-rows: 1fr 1fr 1fr !important; 
+        row-gap: 1.5rem;
+    }
+
+    .editing.min-view .project-todolist-item-confirm{
+        grid-column: 4/5;
+        grid-row: 3;
+    }
+
+    .editing.min-view .project-todolist-item-cancel{
+        grid-column: 1/2;
+        grid-row: 3;
+    }
+    
+    .editing.min-view .project-todolist-item-edit-container{
+        grid-column: 0;
+        grid-row: 3;
+    }
+
+    .editing.min-view  .project-todolist-item-priority{
+        grid-column: 2 / 3;
+        grid-row: 3;
+    }
+    .editing.min-view .project-todolist-item-check{
+        grid-column: 3/4;
+        grid-row: 3;
+    }
+
+    .min-view {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr !important;
+        grid-template-rows: 1fr !important;
+        padding: .50rem .5rem .50rem .5rem !important;
+    }
+    .min-view .project-todolist-item-title{
+        grid-row: 1;
+        grid-column: 2/4;
+        text-decoration: underline;
+        font-size: .9rem;
+        border: none;
+
+        /* max-width: 120px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; */
+    }
+    .min-view .project-todolist-item-edit-container{
+        grid-row: 1;
+        grid-column: 6;
+    }
+    .min-view .project-todolist-item-check{
+        grid-row: 1;
+        grid-column: 1/2;
+    }
+    .min-view .project-todolist-item-priority{
+        grid-row: 1;
+        grid-column: -7;
+    }
+    .min-view .project-todolist-item-delete {
+        grid-row: 1;
+        grid-column: 5/6;
+    }
+
+    .min-view .project-todolist-item-time {
+        grid-row: 1;
+        grid-column: 4/5;
+        font-size: .6rem;
+    }
+    .min-view .project-todolist-item-priority:hover,
+    .min-view .project-todolist-item-check:hover,
+    .min-view .project-todolist-item-edit-container:hover,
+    .min-view .project-todolist-item-title:hover {
+        transform: none !important;
+    }
+
+    .min-view.project-todolist-item .fa,
+    .min-view.project-todolist-item .fas,
+    .min-view.project-todolist-item .far {
+        font-size: 1.2rem;
+    }
+
+    .min-view#project-todolist-item-create .fa,
+    .min-view#project-todolist-item-create .fas,
+    .min-view#project-todolist-item-create .far {
+        font-size: 2rem;
+    }
+
+    .min-view .grow2:hover {
+        transform: scale(1.25);
+    }
+
+
+
+    /* .min-view .project-todolist-item-check{}
+    
+    .min-view .project-todolist-item-edit-container{}
+    
+    .min-view .project-todolist-item-title{} */
 }
 
     /* CSS specific to iOS devices */
