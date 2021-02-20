@@ -160,12 +160,14 @@ class UI {
     initTodoClickToggleMinView(){
         let todos = document.querySelectorAll('.project-todolist-item');
         [...todos].forEach(t => {
-        t.onclick = (event) => {
-            //only allow minview toggling on each indvidual element if in minview mode
-            if (document.getElementById('min-view-button').classList.contains('fa-rotate-180') && event.srcElement.tagName !== 'I'){
-                event.currentTarget.classList.toggle('min-view');
+            if (t.id !== 'project-todolist-item-create'){
+                t.onclick = (event) => {
+                    //only allow minview toggling on each indvidual element if in minview mode
+                    if (document.getElementById('min-view-button').classList.contains('fa-rotate-180') && event.srcElement.tagName !== 'I'){
+                        event.currentTarget.classList.toggle('min-view');
+                    }
+                }
             }
-        }
         })
     }
 
