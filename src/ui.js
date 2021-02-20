@@ -12,12 +12,14 @@ class UI {
         document.addEventListener("keyup", detectSubmit.bind(this));
         function detectSubmit(e){
             let editProjectTitles = document.getElementsByClassName('project-todolist-item-title-input');
-            let editProjectDates = document.getElementsByClassName('project-todolist-item-time-select')
+            let editProjectDates = document.getElementsByClassName('project-todolist-item-time-select');
+            let editProjectNotes = document.getElementsByClassName('project-todolist-item-note-input');
             let addProjectNode = document.getElementById('custom-list-item-add');
             let addTodoNode = document.getElementById('project-todolist-item-create');
             let addProjectInput = document.getElementById('custom-list-item-add-input');
             let addTodoInput = document.getElementById('project-todolist-item-create-title-input');
             let addTodoDateInput = document.getElementById('project-todolist-item-create-time-select');
+            let addTodoNoteInput = document.getElementById('project-todolist-item-create-note-input');
 
             if (e.key == 'Enter' && (document.querySelector(':focus'))){
                 //dont trigger unless input area is not hidden and is active/selected
@@ -34,12 +36,15 @@ class UI {
                     this.toggleCreateTodoConfirmButtonOnEnter(e);
                     this.clearFocus();
                     return;
+                }else if (( (!addTodoNode.classList.contains('hidden')) && (addTodoNoteInput === document.activeElement) )){ 
+                    this.toggleCreateTodoConfirmButtonOnEnter(e);
+                    this.clearFocus();
                 }else if ((([...editProjectTitles].filter(title => title === document.activeElement))[0]=== document.activeElement) ||
-                         (([...editProjectDates].filter(date => date === document.activeElement))[0]=== document.activeElement)){
+                         (([...editProjectDates].filter(date => date === document.activeElement))[0]=== document.activeElement) ||
+                         (([...editProjectNotes].filter(note => note === document.activeElement))[0]=== document.activeElement)) {
                     this.toggleEditTodoViewOnEnter(e);
                     this.clearFocus();
                     this.clearFocus();
-                    console.log('test');
                     return;
                 }else {
                     return;
