@@ -971,7 +971,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         grid-row: 1;
         grid-column: 2/4;
         text-decoration: underline;
-        font-size: .9rem;
+        font-size: 1rem;
         border: none;
         justify-self: self-start;
 
@@ -1017,7 +1017,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
     .min-view.project-todolist-item .fa,
     .min-view.project-todolist-item .fas,
     .min-view.project-todolist-item .far {
-        font-size: 2rem;
+        font-size: 1.25rem;
     }
 
     .min-view#project-todolist-item-create .fa,
