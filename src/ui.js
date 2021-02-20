@@ -255,6 +255,7 @@ class UI {
         this.initDeleteTodoButtons();
         this.initCheckButtons();
         this.initPriorityButtons();
+        this.initTodoClickToggleMinView();
     }
 
     initDefaultProjects(){
