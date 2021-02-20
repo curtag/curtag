@@ -903,7 +903,9 @@ class UI {
         let root = document.getElementById('project-todolist-item-create');
         let titleElement = root.querySelector('#project-todolist-item-create-title-input');
         let dateElement = root.querySelector('#project-todolist-item-create-time-select');
+        let noteElement = root.querySelector('#project-todolist-item-create-note-input');
         titleElement.value = '';
+        noteElement.value = '';
         // dateElement.value = '';
     }
 
