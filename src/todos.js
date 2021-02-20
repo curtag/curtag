@@ -9,13 +9,14 @@ import { formatDistanceToNow, parseISO } from 'date-fns';
 import { Project } from './project';
 
 class Todo {
-    constructor(title, dueDate, priority, completed, projectId, id){
+    constructor(title, dueDate, priority, completed, projectId, id, note){
         this.title = title;
         this.dueDate = dueDate;
         this.priority = priority;
         this.completed = completed;
         this.projectId = projectId;
         this.id = id;
+        this.note = note;
     }
 
     toggleCompleted() {

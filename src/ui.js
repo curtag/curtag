@@ -39,6 +39,7 @@ class UI {
                     this.toggleEditTodoViewOnEnter(e);
                     this.clearFocus();
                     this.clearFocus();
+                    console.log('test');
                     return;
                 }else {
                     return;
@@ -60,6 +61,8 @@ class UI {
         let dateNode = todoElement.querySelector('#project-todolist-item-time-select');
         let text = inputNode.value;
         let date = dateNode.value;
+        let noteNode = todoElement.querySelector('#project-todolist-item-note-input');
+        let note = noteNode.value;
         //swap necessary elements
         let children = [...todoElement.children];
         //error date entered before today
@@ -106,6 +109,9 @@ class UI {
                 //also need to change the date area of the div - probably a better way to do this..
                 Storage.changeTodoDate(todoElement.id, date);
                 let projectDateElement = todoElement.querySelector('.project-todolist-item-time');
+                Storage.changeTodoNote(todoElement.id, note);
+                let projectNoteElement = todoElement.querySelector('.project-todolist-item-note');
+                projectNoteElement.textContent = note;
                 //dont display formatted time message if today, display message 'today
                 this.setDateElementTodayOrDistanceFromToday(projectDateElement, date);
                 child.classList.toggle('hidden');
@@ -146,10 +152,29 @@ class UI {
         minViewButton.onclick = this.toggleMinView;
     }
 
+    initTodoClickToggleMinView(){
+        let todos = document.querySelectorAll('.project-todolist-item');
+        [...todos].forEach(t => {
+        t.onclick = (event) => {
+            //only allow minview toggling on each indvidual element if in minview mode
+            if (document.getElementById('min-view-button').classList.contains('fa-rotate-180') && event.srcElement.tagName !== 'I'){
+                event.currentTarget.classList.toggle('min-view');
+            }
+        }
+        })
+    }
+
     toggleMinView(event){
         let todos = document.getElementsByClassName('project-todolist-item');
         [...todos].forEach(todo => {
-            todo.classList.toggle('min-view');
+            // fa-rotate-180 value as indicator to remove or add min-view
+            // prevents elements from staying in opposite view if minimal
+            // view toggled on or off
+            if (event.target.classList.contains('fa-rotate-180')){
+                todo.classList.remove('min-view');
+            }else{
+                todo.classList.add('min-view');
+            }
         })
         event.target.classList.toggle('fa-rotate-180');
     }
@@ -174,6 +199,7 @@ class UI {
                 <i class="project-todolist-item-priority-button priority${todo.priority} fas fa-square grow2"></i>
             </div>
             <div class="project-todolist-item-title">${todo.title}</div>
+            <div class="project-todolist-item-note">${todo.note}</div>
             <div class="project-todolist-item-time">${time}</div>
             <div class="project-todolist-item-edit-container">
                 <i class=" project-todolist-item-edit fas fa-pencil-alt grow2"></i>
@@ -185,7 +211,14 @@ class UI {
                    required name="project-todolist-item-title-input" 
                    class="project-todolist-item-title-input hidden" 
                    id="project-todolist-item-title-input" 
+                   placeholder="Title"
                    value='${todo.title}'>
+            <input type="text"
+                   required name="project-todolist-item-note-input"
+                   class="project-todolist-item-note-input hidden"
+                   id="project-todolist-item-note-input"
+                   placeholder="Note"
+                   value='${todo.note}'>
             <input type="date" 
                    required name="project-todolist-item-time-select" 
                    class="project-todolist-item-time-select hidden" 
@@ -420,6 +453,8 @@ class UI {
         let todoElement = event.target.parentElement.parentElement;
         let inputNode = todoElement.querySelector('#project-todolist-item-title-input');
         let dateNode = todoElement.querySelector('#project-todolist-item-time-select');
+        let noteNode = todoElement.querySelector('#project-todolist-item-note-input');
+        let note = noteNode.value;
         let text = inputNode.value;
         let date = dateNode.value;
         //swap necessary elements
@@ -498,7 +533,9 @@ class UI {
                     //also need to change the date area of the div - probably a better way to do this..
                     Storage.changeTodoDate(todoElement.id, date);
                     let projectDateElement = todoElement.querySelector('.project-todolist-item-time');
-
+                    Storage.changeTodoNote(todoElement.id, note);
+                    let projectNoteElement = todoElement.querySelector('.project-todolist-item-note');
+                    projectNoteElement.textContent = note;
                     if (isToday(parseISO(date))){
                         projectDateElement.textContent = 'Due Today';
                     }else{
@@ -586,7 +623,7 @@ class UI {
             return;
         }
 
-        let todo = new Todo(todoFields.title, todoFields.time, todoFields.priority, todoFields.completed, projectId, id);       
+        let todo = new Todo(todoFields.title, todoFields.time, todoFields.priority, todoFields.completed, projectId, id, todoFields.note);       
         Storage.saveTodos(projectId, todo);
         this.createTodoFromTodoObj(todo);
         let todoElement = e.target.parentElement.parentElement;
@@ -638,7 +675,7 @@ class UI {
             return;
         }
 
-        let todo = new Todo(todoFields.title, todoFields.time, todoFields.priority, todoFields.completed, projectId, id);       
+        let todo = new Todo(todoFields.title, todoFields.time, todoFields.priority, todoFields.completed, projectId, id, todoFields.note);       
         Storage.saveTodos(projectId, todo);
         this.createTodoFromTodoObj(todo);
         let todoElement = e.target.parentElement;
@@ -925,7 +962,8 @@ class UI {
         let title = document.getElementById('project-todolist-item-create-title-input').value;
         let time = document.getElementById('project-todolist-item-create-time-select').value;
         let priority = this.getPriority(document.getElementById('project-todolist-item-create-priority-button'));
-        return { element, title, time, priority };
+        let note = document.getElementById('project-todolist-item-create-note-input').value;
+        return { element, title, time, priority, note };
     }
 
     checkLocalStorage(){
@@ -990,6 +1028,7 @@ class UI {
             }
         }   
     }
+
 }
 
 

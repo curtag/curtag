@@ -34,3 +34,5 @@ ui.initDateInputCreateTodo();
 
 ui.initEnterKey();
 ui.initMinViewButton();
+
+ui.initTodoClickToggleMinView();

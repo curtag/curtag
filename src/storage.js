@@ -191,6 +191,30 @@ class Storage {
         })
     }
 
+    static changeTodoNote(todoId, note){
+        let parentProjectId = this.getTodoProjectId(todoId);
+        let allProjects = this.getAllSavedProjectsAsObject();
+        let newData = [];
+
+        allProjects.forEach(project => {
+            if (project.id !== parentProjectId){
+                newData.push(project)
+            }else{
+                let todos = project.todos;
+                let newTodos = [];
+                todos.forEach(todo => {
+                    if (todo.id == todoId){
+                        if (todo.note !== note)
+                        todo.note = note;
+                    }
+                    newTodos.push(todo);
+                })
+                newData.push(project);
+            }
+            localStorage.setItem('user', JSON.stringify(newData));
+        })
+    }
+
 
     static changeTodoDate(todoId, date){
         // only change if date has actually changed
