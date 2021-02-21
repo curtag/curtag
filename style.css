@@ -810,11 +810,11 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
     }
 
     .project-todolist-item-check{
-        grid-column: 7;
+        grid-column: 4;
         grid-row: 4;
     }
     .project-todolist-item-priority, .project-todolist-item-create-priority {
-        grid-column: 4;
+        grid-column: 2;
         grid-row: 4;
     }
     .project-todolist-item-title  {
@@ -856,7 +856,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         grid-row: 4;
     }
     .project-todolist-item-delete{
-        grid-column: 2;
+        grid-column: 7;
         grid-row: 4;
     }
     .project-todolist-item-confirm{
