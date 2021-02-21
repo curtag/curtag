@@ -930,7 +930,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
     }
 
     .min-view#project-todolist-item-create {
-        grid-template-columns: 1fr 1fr 1fr 1fr !important;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr !important;
         grid-template-rows: 1fr 1fr 1fr 1fr!important; 
     }
     .editing.min-view {
