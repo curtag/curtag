@@ -284,6 +284,7 @@ footer {
 
 .project-todolist-item-cancel {
     grid-column: 11;
+    justify-self: center;
 }
 
 .project-todolist-item-title{
@@ -358,11 +359,11 @@ footer {
 }
 
 #project-todolist-item-create .project-todolist-item-confirm {
-    grid-column: 10;
+    grid-column: 9;
     grid-row: 4;
 }
 #project-todolist-item-create .project-todolist-item-cancel {
-    grid-column: 1;
+    grid-column: 2;
     grid-row: 4;
 }
 
@@ -507,11 +508,11 @@ footer {
     justify-self: center;
 }
 .project-todolist-item.editing .project-todolist-item-confirm{
-    grid-column: 10;
+    grid-column: 9;
     grid-row: 4;
 }
 .project-todolist-item.editing .project-todolist-item-cancel{
-    grid-column: 1;
+    grid-column: 2;
     grid-row: 4;
 }
 .project-todolist-item.editing .project-todolist-item-check{
@@ -841,7 +842,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
     }
 
     #project-todolist-item-create .project-todolist-item-confirm {
-        grid-column: 10;
+        grid-column: 9;
         grid-row: 4;
     }
 
@@ -862,8 +863,8 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         grid-column: 0;
         grid-row: 4;
     }
-    .project-todolist-item-cancel{
-        grid-column: 1;
+    #project-todolist-item-create .project-todolist-item-cancel{
+        grid-column: 2;
         grid-row: 4;
     }
 
@@ -934,8 +935,8 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
     }
     .editing.min-view {
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr !important;
-        grid-template-rows: 1fr 1fr 1fr 1fr!important; 
-        row-gap: .5rem;
+        grid-template-rows: 1fr 1fr 1fr 1fr!important;
+        padding: 1.5rem 1.5rem 1.5rem 1.5rem !important;
     }
 
     .editing.min-view .project-todolist-item-confirm{
@@ -1018,6 +1019,12 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
     .min-view.project-todolist-item .fas,
     .min-view.project-todolist-item .far {
         font-size: 1.25rem;
+    }
+
+    .editing.min-view.project-todolist-item .fa,
+    .editing.min-view.project-todolist-item .fas,
+    .editing.min-view.project-todolist-item .far {
+        font-size: 2rem;
     }
 
     .min-view#project-todolist-item-create .fa,
