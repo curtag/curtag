@@ -154,6 +154,13 @@ footer {
     margin-top: .5rem;
     display: flex; 
     justify-content: space-between;
+    align-items: center;
+}
+
+.custom-list-item p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 14rem;
 }
 
 .custom-list-item .fas {
@@ -290,7 +297,10 @@ footer {
 .project-todolist-item-title{
     grid-column: 3/5;
     text-decoration: underline;
-    font-size: larger;
+    /* font-size: larger; */
+    max-width: 13rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .project-todolist-item-delete{
@@ -638,6 +648,14 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
     #project-container{
         flex: 4 !important;
     }
+    .project-todolist-item-title {
+        max-width: 10rem;
+    }
+}
+@media (max-width: 1300px){
+    .project-todolist-item-title {
+        max-width: 6.5rem;
+    }
 }
 
 @media (max-width: 960px){
@@ -661,6 +679,9 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
     .custom-list-item, .default-list-item, #nav-add-project{
         font-size: .8rem;
     }
+    .custom-list-item p {
+        max-width: 10.5rem;
+    }
     
     #project-title {
         font-size: 1.5rem;
@@ -672,6 +693,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
 
     .project-todolist-item-title {
         padding-right: .5rem;
+        max-width: 5rem;
     }
 
     #project-todolist-item-title-input, #project-todolist-item-create-title-input, #project-todolist-item-note-input, #project-todolist-item-create-note-input{
@@ -771,11 +793,12 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         font-size: .8rem;
     }
     .default-list-item p{
-        padding: 0rem 1rem 0rem 0rem;
+        padding: 0rem 5rem 0rem 0rem;
     }
     
     .custom-list-item, .default-list-item{
         margin-top: .8rem;
+
     }
 
 
@@ -797,9 +820,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         display: inline-block;
         margin: .05rem 0rem 0rem 0rem;
         overflow: hidden;
-        width: 5rem;
-        max-width: 5rem;
-        min-width: 5rem;
+        max-width: 9.5rem;
     }
     .custom-list-item .hidden {
         display: block !important;
@@ -822,6 +843,9 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         font-size: 1.5rem;
         grid-column: 1 / 11;
         grid-row: 1;
+        overflow: hidden;
+        max-width: 80vw;
+        text-overflow: ellipsis;
     }
     .project-todolist-item-time {
         font-size: .8rem;
@@ -972,14 +996,13 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         grid-row: 1;
         grid-column: 2/4;
         text-decoration: underline;
-        font-size: 1rem;
+        font-size: .8rem;
         border: none;
         justify-self: self-start;
 
-        /* max-width: 120px;
-        white-space: nowrap;
+        max-width: 12rem;
         overflow: hidden;
-        text-overflow: ellipsis; */
+        text-overflow: ellipsis;
     }
     
     .min-view .project-todolist-item-note{
@@ -1044,6 +1067,12 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
     .min-view .project-todolist-item-edit-container{}
     
     .min-view .project-todolist-item-title{} */
+}
+
+@media (max-width: 650px){
+    .min-view .project-todolist-item-title {
+        max-width: 8rem;
+    }
 }
 
     /* CSS specific to iOS devices */
