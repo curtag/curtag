@@ -236,6 +236,7 @@ footer {
     width: 90%;
     margin: auto;
     margin-top: 2.5rem;
+    align-items: center;
 }
 
 #min-view-button {
@@ -249,10 +250,13 @@ footer {
 }
 
 #project-title {
-    display: flex;
+    display: inline-block;
     color: white;
     font-family: 'Lato', sans-serif;
     font-size: 2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 
 #project-todolist {
@@ -793,7 +797,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         font-size: .8rem;
     }
     .default-list-item p{
-        padding: 0rem 5rem 0rem 0rem;
+        padding: 0rem 2rem 0rem 0rem;
     }
     
     .custom-list-item, .default-list-item{
@@ -821,6 +825,7 @@ input[type="date"]::-webkit-datetime-edit-year-field:focus{
         margin: .05rem 0rem 0rem 0rem;
         overflow: hidden;
         max-width: 9.5rem;
+        padding: 0 1rem 0 .5rem;
     }
     .custom-list-item .hidden {
         display: block !important;
